@@ -44,6 +44,13 @@ $(document).on("change", "select.playlist", function() {
 });
 
 
+function logout() {
+  $.post("includes/handlers/ajax/logout.php", function() {
+    location.reload();
+  });
+}
+
+
 
 function openPage(url) {
   //open different page dynamically, ie only changing the content of main content

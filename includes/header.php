@@ -1,14 +1,17 @@
 <?php
-  include("includes/config/config.php");
-  include("includes/classes/Artist.php");
-  include("includes/classes/Album.php");
-  include("includes/classes/Song.php");
+include("includes/config/config.php");
+include("includes/classes/User.php");
+include("includes/classes/Artist.php");
+include("includes/classes/Album.php");
+include("includes/classes/Song.php");
+include("includes/classes/Playlist.php");
 
   //session_destroy();          // Log out manually as there is no log out button yet;
 
   if(isset($_SESSION['userLoggedIn'])) {
-    $userLoggedIn = $_SESSION['userLoggedIn'];
-    echo "<script>userLoggedIn = '$userLoggedIn'; </script>";   //have userLoggedIn varible available for javascript
+    $userLoggedIn = new User($con, $_SESSION['userLoggedIn']);
+    $username = $userLoggedIn->getUsername();
+    echo "<script>userLoggedIn = '$username'; </script>";   //have userLoggedIn varible available for javascript
   }
   else {
     header("Location: register.php");
