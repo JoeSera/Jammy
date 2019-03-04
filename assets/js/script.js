@@ -23,6 +23,28 @@ $(window).scroll(function() {
   hideOptionsMenu();    // as soon as user start scrolling options menu will disappear
 });
 
+$(document).on("change", "select.playlist", function() {
+  // everytime the dropdown changes
+  var select = $(this);
+  var playlistId = select.val();   // get id from the option selected
+  var songId = select.prev(".songId").val();    // get songId from optionMenu
+
+  $.post("includes/handlers/ajax/addToPlaylist.php", {playlistId: playlistId, songId: songId}).done(function(error) {
+
+    if(error != "") {
+      //check for errors in ajax called
+      alert(error);
+      return;
+    }
+
+    hideOptionsMenu();
+    select.val("");
+  });
+
+});
+
+
+
 function openPage(url) {
   //open different page dynamically, ie only changing the content of main content
 
@@ -53,9 +75,12 @@ function hideOptionsMenu() {
 
 function showOptionsMenu(button) {
   // get the x y position of the button clicked and show option menu beside it
+  var songId = $(button).prevAll(".songId").val();
   var menu = $(".optionsMenu");
 
   var menuWidth = menu.width();
+
+  menu.find(".songId").val(songId);
 
   var scrollTop = $(window).scrollTop();    //get the distance from top of window to top of document
   var elementOffset = $(button).offset().top;    // change to jquery element and get distance from the top of the document
@@ -77,6 +102,23 @@ function formatTime(seconds) {
   var extraZero = (seconds < 10) ? "0" : "";
 
   return minutes + ":" + extraZero + seconds;
+ }
+
+ function removeFromPlaylist(button, playlistId) {
+   var songId = $(button).prevAll(".songId").val();
+
+   $.post("includes/handlers/ajax/removeFromPlaylist.php", {playlistId: playlistId, songId: songId}).done(function(error) {
+     //run function when ajax returns
+
+     if(error != "") {
+       //check for errors in ajax called
+       alert(error);
+       return;
+     }
+
+     openPage("playlist.php?id=" + playlistId);   //page refresh
+
+     });
  }
 
  function createPlaylist() {
