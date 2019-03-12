@@ -43,6 +43,13 @@ $(document).on("change", "select.playlist", function() {
 
 });
 
+function updateEmail(emailClass) {
+  var emailValue = $("." + emailClass).val();
+
+  $.post("includes/handlers/ajax/updateEmail.php", {email: emailValue, username: userLoggedIn}).done(function(response) {
+    $("." + emailClass).nextAll(".message").text(response);   // Find email class, go to the next element with .message class, and add reponse to text
+  });
+}
 
 function logout() {
   $.post("includes/handlers/ajax/logout.php", function() {
