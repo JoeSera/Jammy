@@ -15,12 +15,12 @@ include("includes/includedFiles.php");
 
   <div class="container">
     <h2>PASSWORD</h2>
-    <input type="password" class="oldEmail" name="oldEmail" placeholder="Current Password">
+    <input type="password" class="oldPassword" name="oldPassword" placeholder="Current Password">
     <input type="password" class="newPassword1" name="newPassword1" placeholder="New Password">
     <input type="password" class="newPassword2" name="newPassword2" placeholder="Confirm Password">
 
     <span class="message"></span>
-    <button type="button" class="button" name="button" onclick="">SAVE</button>
+    <button type="button" class="button" name="button" onclick="updatePassword('oldPassword','newPassword1', 'newPassword2')">SAVE</button>
 
   </div>
 
